@@ -15,17 +15,19 @@ namespace LDAP_Connection
         {
             String employeeId = string.Empty;
             String password = string.Empty;
+            String ldapConnection = string.Empty;
             try
             {
-                LdapConnection connection = new LdapConnection("xxxx.xxx.xxx.com");
-                NetworkCredential credential = new NetworkCredential(employeeId, password);
-                connection.Credential = credential;
+                var connection = new LdapConnection(ldapConnection)
+                {
+                    Credential = new NetworkCredential(employeeId, password)
+                };
                 connection.Bind();
                 Console.WriteLine("logged in");
             }
-            catch (Exception e)
+            catch (LdapException exception)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(exception.Message);
                 throw;
             }
         }
